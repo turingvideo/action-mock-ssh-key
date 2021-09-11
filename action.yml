@@ -16,7 +16,7 @@ runs:
         cat << EOF > ~/.ssh/id_${{ inputs.repo }}
         ${{ inputs.key }}
         EOF
-        cat << EOF > ~/.ssh/config
+        cat << EOF >> ~/.ssh/config
         Host key-${{ inputs.repo }}.github.com
           Hostname github.com
           IdentityFile=~/.ssh/id_${{ inputs.repo }}
