@@ -1,0 +1,25 @@
+name: 'Mock ssh key'
+description: 'Mock ssh key and manipulate host-key.'
+inputs:
+  repo:
+    description: 'Which repo to access'
+    required: true
+  key:
+    description: 'Which key to use'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        mkdir -p ~/.ssh
+        cat << EOF > ~/.ssh/id_${{ inputs.repo }}
+        ${{ inputs.key }}
+        EOF
+        cat << EOF > ~/.ssh/config
+        Host key-${{ inputs.repo }}.github.com
+          Hostname github.com
+          IdentityFile=~/.ssh/id_${{ inputs.repo }}
+        EOF
+        chmod 0600 ~/.ssh/*
+        git config --global --add url."git@key-${{ inputs.repo }}.github.com:turingvideo/${{ inputs.repo }}".insteadOf "https://github.com/turingvideo/${{ inputs.repo }}"
+      shell: bash
