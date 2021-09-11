@@ -17,9 +17,9 @@ runs:
         ${{ inputs.key }}
         EOF
         cat << EOF >> ~/.ssh/config
-        Host key-${{ inputs.repo }}.github.com
+        Host github.com-key-${{ inputs.repo }}
           Hostname github.com
           IdentityFile=~/.ssh/id_${{ inputs.repo }}
         EOF
         chmod 0600 ~/.ssh/*
-        git config --global --add url."git@key-${{ inputs.repo }}.github.com:turingvideo/${{ inputs.repo }}".insteadOf "https://github.com/turingvideo/${{ inputs.repo }}"
+        git config --global --add url."git@github.com-key-${{ inputs.repo }}:turingvideo/${{ inputs.repo }}".insteadOf "https://github.com/turingvideo/${{ inputs.repo }}"
