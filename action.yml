@@ -10,7 +10,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: |
+    - shell: bash
+      run: |
         mkdir -p ~/.ssh
         cat << EOF > ~/.ssh/id_${{ inputs.repo }}
         ${{ inputs.key }}
@@ -22,4 +23,3 @@ runs:
         EOF
         chmod 0600 ~/.ssh/*
         git config --global --add url."git@key-${{ inputs.repo }}.github.com:turingvideo/${{ inputs.repo }}".insteadOf "https://github.com/turingvideo/${{ inputs.repo }}"
-      shell: bash
