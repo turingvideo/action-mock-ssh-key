@@ -22,4 +22,6 @@ runs:
           IdentityFile=~/.ssh/id_${{ inputs.repo }}
         EOF
         chmod 0600 ~/.ssh/*
-        git config --global --add url."git@github.com-key-${{ inputs.repo }}:turingvideo/${{ inputs.repo }}".insteadOf "https://github.com/turingvideo/${{ inputs.repo }}"
+        git config --global --add url."git@github.com-key-${{ inputs.repo }}:turingvideo/${{ inputs.repo }}.git".insteadOf "https://github.com/turingvideo/${{ inputs.repo }}.git"
+        git config --global --add url."git@github.com-key-${{ inputs.repo }}:turingvideo/${{ inputs.repo }}.git".insteadOf "git@github.com:turingvideo/${{ inputs.repo }}.git"
+        git config --global --add url."ssh://git@github.com-key-${{ inputs.repo }}/turingvideo/${{ inputs.repo }}.git".insteadOf "ssh://git@github.com/turingvideo/${{ inputs.repo }}.git"
