@@ -7,6 +7,9 @@ inputs:
   key:
     description: 'Which key to use'
     required: true
+  ssh-agent-sock:
+    description: 'Which UNIX-domain socket to bind an agent'
+    required: false
 runs:
   using: "composite"
   steps:
@@ -22,6 +25,11 @@ runs:
           IdentityFile=~/.ssh/id_${{ inputs.repo }}
         EOF
         chmod 0600 ~/.ssh/*
+        if [ -n "${{ inputs.ssh-agent-sock }}" ]
+        then
+          ssh-agent -a "${{ inputs.ssh-agent-sock }}" > /dev/null
+          ssh-add ~/.ssh/id_${{ inputs.repo }}
+        fi
         git config --global --add url."git@github.com-key-${{ inputs.repo }}:turingvideo/${{ inputs.repo }}".insteadOf "https://github.com/turingvideo/${{ inputs.repo }}"
         git config --global --add url."git@github.com-key-${{ inputs.repo }}:turingvideo/${{ inputs.repo }}".insteadOf "git@github.com:turingvideo/${{ inputs.repo }}"
         git config --global --add url."ssh://git@github.com-key-${{ inputs.repo }}/turingvideo/${{ inputs.repo }}.git".insteadOf "ssh://git@github.com/turingvideo/${{ inputs.repo }}.git"
