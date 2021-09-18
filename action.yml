@@ -27,7 +27,7 @@ runs:
         chmod 0600 ~/.ssh/*
         if [ -n "${{ inputs.ssh-agent-sock }}" ]
         then
-          ssh-agent -a "${{ inputs.ssh-agent-sock }}" > /dev/null
+          eval `ssh-agent -a "${{ inputs.ssh-agent-sock }}"`
           ssh-add ~/.ssh/id_${{ inputs.repo }}
         fi
         git config --global --add url."git@github.com-key-${{ inputs.repo }}:turingvideo/${{ inputs.repo }}".insteadOf "https://github.com/turingvideo/${{ inputs.repo }}"
